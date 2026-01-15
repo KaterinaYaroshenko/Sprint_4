@@ -1,5 +1,4 @@
 package test;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -16,7 +15,7 @@ public class FaqTest extends BaseTest {
         this.expectedText = expectedText;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1}")
     public static Object[][] getTestData() {
         return new Object[][]{
                 {0, "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
@@ -32,7 +31,8 @@ public class FaqTest extends BaseTest {
 
     @Test
     public void checkFaqAnswers() {
-        driver.get("https://qa-scooter.praktikum-services.ru");
+
+        driver.get(MainPage.BASE_URL);
 
         MainPage mainPage = new MainPage(driver);
 
@@ -41,8 +41,5 @@ public class FaqTest extends BaseTest {
 
         Assert.assertEquals("Текст ответа для индекса " + index + " не совпадает!", expectedText, actualText);
     }
-    @After
-    public void teardown() {
-        driver.quit();
-    }
+
 }

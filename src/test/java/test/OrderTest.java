@@ -2,18 +2,13 @@ package test;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.junit.Before;
-import org.junit.After;
 import pageobject.MainPage;
 import pageobject.OrderPage;
 import pageobject.RentPage;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class OrderTest {
-    private WebDriver driver;
+public class OrderTest extends BaseTest { // Наследование от BaseTest
 
     private final String name;
     private final String surname;
@@ -36,7 +31,7 @@ public class OrderTest {
         this.isTopButton = isTopButton;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тест заказа: {0} {1} {3}")
     public static Object[][] getTestData() {
         return new Object[][] {
                 {"Катя", "Чупрова", "Лужники 1", "Сокольники", "79998887766", "18.01.2026", "сутки", true},
@@ -44,16 +39,9 @@ public class OrderTest {
         };
     }
 
-    @Before
-    public void setup() {
-        driver = new ChromeDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru");
-        MainPage mainPage = new MainPage(driver);
-        mainPage.clickCookieButton();
-    }
-
     @Test
-    public void checkOrderFlow() {
+    public void checkOrderFlowTest() {
+
         MainPage mainPage = new MainPage(driver);
         if (isTopButton) {
             mainPage.clickTopOrderButton();
@@ -69,10 +57,5 @@ public class OrderTest {
         rentPage.confirmOrder();
 
         assertTrue("Окно успешного заказа не появилось", rentPage.isSuccessHeaderDisplayed());
-    }
-
-    @After
-    public void teardown() {
-        driver.quit();
     }
 }
