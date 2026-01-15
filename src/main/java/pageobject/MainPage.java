@@ -10,6 +10,9 @@ import java.time.Duration;
 public class MainPage {
     private final WebDriver driver;
 
+    // Ссылка на сайт
+    public static final String BASE_URL = "https://qa-scooter.praktikum-services.ru";
+
     // Верхняя кнопка "Заказать"
     private final By topOrderButton = By.xpath(".//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Button_Button')]");
 
